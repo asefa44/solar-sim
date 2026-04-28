@@ -152,14 +152,6 @@ Orbital periods measured over a 1200-second test run:
 
 Deviations are within expected range for an n-body simulation — planets mutually perturb each other's orbits, which is physically accurate behavior.
 
----
-
-## 🛠️ Built With
-
-- [Unity](https://unity.com/) — Game engine
-- C# — Scripting
-- Newtonian Mechanics — Physics model
-- RK4 Integration — Numerical solver
 
 ---
 
