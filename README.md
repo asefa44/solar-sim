@@ -10,6 +10,8 @@ A physically accurate solar system simulation built in **Unity**, where all plan
 
 This project simulates the motion of all 8 planets in our solar system. Rather than using pre-defined orbital paths or animations, every planet's trajectory emerges purely from **gravitational forces** calculated at each simulation step. The result is a dynamic n-body simulation where planets influence each other's orbits — just as they do in reality.
 
+<img width="1920" height="1080" alt="Adsız" src="https://github.com/user-attachments/assets/0028192a-ffb9-47e0-a47b-41f167dfe089" />
+
 ---
 
 ## ⚙️ Physics Model
