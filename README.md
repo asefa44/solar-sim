@@ -1,6 +1,6 @@
 # 🌍 Solar System Simulation
 
-A physically accurate solar system simulation built in **Unity**, where all planetary motion is governed by **Newton's Law of Universal Gravitation** and integrated using the **4th-order Runge-Kutta (RK4)** method.
+A numerically simulated solar system simulation built in **Unity**, where all planetary motion is governed by **Newton's Law of Universal Gravitation** and integrated using the **4th-order Runge-Kutta (RK4)** method.
 
 ![Unity](https://img.shields.io/badge/Unity-2022+-black?logo=unity) ![Physics](https://img.shields.io/badge/Physics-Newtonian-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
