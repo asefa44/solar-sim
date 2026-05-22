@@ -14,6 +14,14 @@ This project simulates the motion of all 8 planets in our solar system. Rather t
 
 ---
 
+## Features
+- Real-time n-body gravity simulation
+- RK4 orbital integration
+- Accurate planetary orbital periods
+- Planet focus camera system
+- Interactive solar system exploration
+
+
 ## ⚙️ Physics Model
 
 ### Newton's Law of Universal Gravitation
