@@ -4,7 +4,7 @@ using UnityEngine;
 public class OrbitRing : MonoBehaviour
 {
     public Transform center;     // sun
-    public int segments = 100;
+    public int segments = 400;
     public float radius = 5f;
 
     private LineRenderer lr;

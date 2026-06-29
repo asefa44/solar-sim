@@ -14,6 +14,9 @@ public class CelestialBody : MonoBehaviour
     public CelestialBody orbitTarget;
     public bool autoCalculateVelocity = true;
 
+    [Header("Planet Data")]
+    public PlanetData data;  // Inspector'da ScriptableObject'i sürükle
+
     void Start()
     {
         if (!isStationary && autoCalculateVelocity && orbitTarget != null)

@@ -21,6 +21,9 @@ public class SolarSystemCamera : MonoBehaviour
     [Header("Layer")]
     public LayerMask planetLayerMask;
 
+    [Header("UI")]
+    public PlanetInfoUI planetInfoUI;  // Inspector'da PlanetInfoUI objesini sürükle
+
     private float targetZoom;
     private float currentZoom;
 
@@ -34,10 +37,25 @@ public class SolarSystemCamera : MonoBehaviour
 
     private Transform hoveredPlanet;
 
+    // Tıklama ile sürüklemeyi ayırt etmek için
+    private Vector2 mouseDownPos;
+    private float clickThreshold = 5f;
+
     void Start()
     {
         targetZoom = defaultZoom;
         currentZoom = defaultZoom;
+
+        // Her gezegene dot ekle ve tıklamayı bağla
+        foreach (Transform planet in planets)
+        {
+            PlanetDot dot = planet.GetComponent<PlanetDot>();
+            if (dot != null)
+            {
+                Transform p = planet; // closure için
+                dot.onDotClicked += () => SelectPlanet(p);
+            }
+        }
     }
 
     void Update()
@@ -46,13 +64,18 @@ public class SolarSystemCamera : MonoBehaviour
         HandlePlanetSwitch();
         HandleOrbitInput();
         HandleMouseClick();
-        ApplyCamera();
         HandleHover();
+        ApplyCamera();
     }
 
     void HandleMouseClick()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (Input.GetMouseButtonDown(0))
+            mouseDownPos = Input.mousePosition;
+
+        // Fare çok hareket ettiyse tıklama sayma (sürüklüyor)
+        if (!Input.GetMouseButtonUp(0)) return;
+        if (Vector2.Distance(mouseDownPos, Input.mousePosition) > clickThreshold) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -63,19 +86,20 @@ public class SolarSystemCamera : MonoBehaviour
             {
                 if (planets[i] == hit.transform)
                 {
-                    currentPlanetIndex = i;
-                    followTarget = planets[i];
-                    targetPitch = 45f;
-                    targetZoom = 15f;
+                    SelectPlanet(planets[i]);
                     return;
                 }
             }
+
             if (hit.transform == sun)
             {
                 followTarget = null;
                 currentPlanetIndex = -1;
                 targetPitch = 85f;
                 targetZoom = defaultZoom;
+
+                if (planetInfoUI != null)
+                    planetInfoUI.SelectPlanet(null);
             }
         }
     }
@@ -121,10 +145,11 @@ public class SolarSystemCamera : MonoBehaviour
             }
         }
     }
-
     void SelectPlanet(Transform planet)
     {
         followTarget = planet;
+        // Focus'tayken kameranın gezegene uzaklığını referans al
+        PlanetText.distanceReference = planet;
 
         currentPlanetIndex = -1;
         for (int i = 0; i < planets.Length; i++)
@@ -138,6 +163,12 @@ public class SolarSystemCamera : MonoBehaviour
 
         targetPitch = 45f;
         targetZoom = 15f;
+
+        if (planetInfoUI != null)
+        {
+            CelestialBody body = planet.GetComponent<CelestialBody>();
+            planetInfoUI.SelectPlanet(body);
+        }
     }
 
     void HandleZoom()
@@ -160,6 +191,9 @@ public class SolarSystemCamera : MonoBehaviour
                 followTarget = null;
                 targetPitch = 85f;
                 targetZoom = defaultZoom;
+
+                if (planetInfoUI != null)
+                    planetInfoUI.SelectPlanet(null);
             }
             else
             {
@@ -173,6 +207,10 @@ public class SolarSystemCamera : MonoBehaviour
             currentPlanetIndex = -1;
             targetPitch = 85f;
             targetZoom = defaultZoom;
+            PlanetText.distanceReference = null;
+
+            if (planetInfoUI != null)
+                planetInfoUI.SelectPlanet(null);
         }
     }
 
