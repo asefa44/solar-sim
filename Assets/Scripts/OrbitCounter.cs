@@ -4,7 +4,8 @@ using UnityEngine;
 public class OrbitCounter : MonoBehaviour
 {
     /// <summary>
-    /// This script was used to measure the periods of each planet
+    /// This test script was used to measure the periods of each planet
+    /// Later replaced with better version
     /// </summary>
 
 

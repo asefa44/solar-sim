@@ -15,7 +15,7 @@ public class CelestialBody : MonoBehaviour
     public bool autoCalculateVelocity = true;
 
     [Header("Planet Data")]
-    public PlanetData data;  // Inspector'da ScriptableObject'i sürükle
+    public PlanetData data;
 
     void Start()
     {

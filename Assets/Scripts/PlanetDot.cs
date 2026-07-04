@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class PlanetDot : MonoBehaviour
 {
-    [Header("Ayarlar")]
+    [Header("Settings")]
     public Color dotColor = Color.white;
-    public float dotSize = 12f;             // Pixel cinsinden sabit boyut
-    public float disappearDistance = 300f;   // Bu mesafenin altında dot gizlenir
+    public float dotSize = 12f;
+    public float disappearDistance = 300f;
 
     private Camera mainCam;
     private Canvas canvas;
@@ -14,17 +14,14 @@ public class PlanetDot : MonoBehaviour
     private Image dotImage;
     private bool isVisible = false;
 
-    // Tıklama için
     public System.Action onDotClicked;
 
     void Start()
     {
         mainCam = Camera.main;
 
-        // Canvas bul veya oluştur
         canvas = FindFirstObjectByType<Canvas>();
 
-        // Dot objesi oluştur
         GameObject dotObj = new GameObject("Dot_" + gameObject.name);
         dotObj.transform.SetParent(canvas.transform, false);
 
@@ -35,17 +32,17 @@ public class PlanetDot : MonoBehaviour
         dotImage.color = dotColor;
         dotImage.sprite = CreateCircleSprite();
 
-        // Button ekle — tıklanabilir olsun
         Button btn = dotObj.AddComponent<Button>();
         btn.onClick.AddListener(() => onDotClicked?.Invoke());
         btn.transition = Selectable.Transition.None;
+
+        dotRect.gameObject.SetActive(false);
     }
 
     void Update()
     {
         if (mainCam == null || dotRect == null) return;
 
-        // Inspector'dan boyut değişince anında uygula
         dotRect.sizeDelta = new Vector2(dotSize, dotSize);
 
         float camDist = Vector3.Distance(mainCam.transform.position, transform.position);
@@ -69,8 +66,6 @@ public class PlanetDot : MonoBehaviour
 
         dotRect.position = screenPos;
     }
-
-    // Basit daire sprite oluştur
     Sprite CreateCircleSprite()
     {
         int size = 32;

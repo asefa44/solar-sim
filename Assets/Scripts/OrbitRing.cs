@@ -1,36 +1,66 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class OrbitRing : MonoBehaviour
 {
-    public Transform center;     // sun
-    public int segments = 400;
-    public float radius = 5f;
+    [Header("Visual Settings")]
+    public Color ringColor = new Color(1f, 1f, 1f, 0.3f);
+    public float lineWidth = 0.05f;
+    public int segments = 128;
 
-    private LineRenderer lr;
+    public Transform sun;
+
+    private LineRenderer lineRenderer;
 
     void Start()
     {
-        lr = GetComponent<LineRenderer>();
-        lr.positionCount = segments + 1;
-        lr.loop = true;
+        GameObject ringObj = new GameObject("OrbitRing");
+        ringObj.transform.SetParent(sun);
+        ringObj.transform.localPosition = Vector3.zero;
 
-        DrawCircle();
+        lineRenderer = ringObj.AddComponent<LineRenderer>();
+        lineRenderer.loop = true;
+        lineRenderer.positionCount = segments;
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.useWorldSpace = true;
+
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] {
+                new GradientColorKey(ringColor, 0f),
+                new GradientColorKey(ringColor, 1f)
+            },
+            new GradientAlphaKey[] {
+                new GradientAlphaKey(ringColor.a, 0f),
+                new GradientAlphaKey(ringColor.a, 1f)
+            }
+        );
+        lineRenderer.colorGradient = gradient;
     }
 
-    void DrawCircle()
+    void Update()
     {
-        float angle = 0f;
+        DrawRing();
+    }
 
-        for (int i = 0; i <= segments; i++)
+    void DrawRing()
+    {
+        float orbitRadius = Vector3.Distance(transform.position, sun.position);
+
+        Vector3[] points = new Vector3[segments];
+
+        for (int i = 0; i < segments; i++)
         {
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
-            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
+            float angle = (float)i / segments * 2f * Mathf.PI;
 
-            Vector3 pos = new Vector3(x, 0, z) + center.position;
-            lr.SetPosition(i, pos);
+            float x = Mathf.Cos(angle) * orbitRadius;
+            float z = Mathf.Sin(angle) * orbitRadius;
 
-            angle += 360f / segments;
+            points[i] = sun.position + new Vector3(x, 0f, z);
         }
+
+        lineRenderer.SetPositions(points);
     }
 }

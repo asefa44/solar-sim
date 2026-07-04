@@ -7,7 +7,7 @@ public class PlanetInfoUI : MonoBehaviour
     [Header("Panel")]
     public GameObject infoPanel;
 
-    [Header("Statik Bilgiler")]
+    [Header("Static datas")]
     public TextMeshProUGUI planetNameText;
     public TextMeshProUGUI massText;
     public TextMeshProUGUI radiusText;
@@ -16,15 +16,13 @@ public class PlanetInfoUI : MonoBehaviour
     public TextMeshProUGUI distanceAUText;
     public TextMeshProUGUI orbitalPeriodText;
 
-    [Header("Gerçek Zamanlı Bilgiler")]
+    [Header("Realtime datas")]
     public TextMeshProUGUI realtimeSpeedText;
     public TextMeshProUGUI realtimeDistanceText;
     public TextMeshProUGUI realtimeOrbitTimeText;
 
-    [Header("Referanslar")]
     public Transform sun;
 
-    // Aktif gezegen
     private CelestialBody selectedBody;
     private float orbitStartTime;
     private Vector3 orbitStartPos;
@@ -48,10 +46,8 @@ public class PlanetInfoUI : MonoBehaviour
         }
 
         infoPanel.SetActive(true);
-        // Orbit sayacını sıfırla
         ResetOrbitCounter();
 
-        // Statik verileri doldur
         if (body.data != null)
             PopulateStaticData(body.data);
     }
@@ -77,13 +73,11 @@ public class PlanetInfoUI : MonoBehaviour
 
     void UpdateRealtimeData()
     {
-        // Anlık hız
         float speed = selectedBody.velocity.magnitude;
         realtimeSpeedText.text = $"Velocity: {speed:F2} unit/sec";
 
-        // Güneş'e anlık uzaklık
         float dist = Vector3.Distance(selectedBody.transform.position, sun.position);
-        float distAU = dist / 10f;  // 1 AU = 10 birim
+        float distAU = dist / 10f;
         realtimeDistanceText.text = $"Distance to sun: {dist:F2} unit ({distAU:F3} AU)";
     }
 
@@ -91,7 +85,7 @@ public class PlanetInfoUI : MonoBehaviour
     {
         if (orbitCompleted) return;
 
-        currentOrbitTime += Time.deltaTime;
+        currentOrbitTime += Time.deltaTime * SimulationTime.speedMultiplier;
 
         Vector3 toStart = orbitStartPos - sun.position;
         Vector3 toCurrent = selectedBody.transform.position - sun.position;

@@ -3,16 +3,15 @@ using TMPro;
 
 public class PlanetText : MonoBehaviour
 {
-    [Header("Font Boyutu")]
+    [Header("Font size")]
     public float minFontSize = 24f;
     public float maxFontSize = 80f;
 
-    [Header("Mesafe")]
+    [Header("Distance")]
     public float minDistance = 5f;
     public float maxDistance = 400f;
 
-    // Kameranın hangi noktayı referans aldığını dışarıdan set ediyoruz
-    public static Transform distanceReference = null;  // null = güneş kullan
+    public static Transform distanceReference = null;  // null = sun
 
     private Camera cam;
     private TextMeshPro tmp;
@@ -33,7 +32,6 @@ public class PlanetText : MonoBehaviour
         transform.LookAt(cam.transform);
         transform.Rotate(0, 180f, 0);
 
-        // Focus'tayken kameranın gezegene uzaklığı, serbest modda güneşe uzaklık
         Transform reference = distanceReference != null ? distanceReference : sun;
 
         float dist = reference != null
