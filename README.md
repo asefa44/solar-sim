@@ -107,7 +107,7 @@ Real time N-body gravitational simulation with on-screen energy tracking. In-sim
 | Scroll | Zoom |
 | Click a planet | Focus and follow |
 | Click the Sun or press Space | Return to free view |
-| Tab | Cycle through planets |# 🌍 Solar System Simulation
+| Tab | Cycle through planets |
 
 ## License
 
