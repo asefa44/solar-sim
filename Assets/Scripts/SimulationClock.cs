@@ -29,7 +29,7 @@ public class SimulationClock : MonoBehaviour
 
     void Update()
     {
-        elapsedSimDays += Time.deltaTime * DAYS_PER_SECOND * SimulationTime.speedMultiplier;
+        elapsedSimDays += Time.deltaTime * DAYS_PER_SECOND;
 
         UpdateDate();
     }

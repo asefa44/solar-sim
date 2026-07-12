@@ -16,10 +16,7 @@ public class GravityManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        float scaledDelta = Time.fixedDeltaTime * SimulationTime.speedMultiplier;
-        SimulationTime.Tick(Time.fixedDeltaTime);
-
-        float subDelta = scaledDelta / substeps;
+        float subDelta = Time.fixedDeltaTime / substeps;
         for (int i = 0; i < substeps; i++)
             StepRK4(subDelta);
     }

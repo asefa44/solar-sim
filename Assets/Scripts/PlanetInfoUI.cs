@@ -85,7 +85,7 @@ public class PlanetInfoUI : MonoBehaviour
     {
         if (orbitCompleted) return;
 
-        currentOrbitTime += Time.deltaTime * SimulationTime.speedMultiplier;
+        currentOrbitTime += Time.deltaTime;
 
         Vector3 toStart = orbitStartPos - sun.position;
         Vector3 toCurrent = selectedBody.transform.position - sun.position;
