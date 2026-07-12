@@ -1,7 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
-Packages/** linguist-vendored
-ProjectSettings/** linguist-generated
-*.meta linguist-generated
-*.asset linguist-generated
-Assets/TextMesh Pro/** linguist-vendored
+* linguist-vendored
+Assets/Scripts/** linguist-vendored=false
