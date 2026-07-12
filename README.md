@@ -91,7 +91,7 @@ Two independent checks were used to confirm correct physical behavior.
 
 All results fall within 1 to 4 percent of target, consistent with expected N-body perturbation rather than integration error.
 
-**Energy conservation.** In an isolated gravitational system, total mechanical energy (kinetic plus potential) should remain constant. Over the same test run, total energy held at approximately -3.97, drifting by 0.0002 to 0.0008 percent. A first-order Euler integrator typically drifts 5 to 50 percent under equivalent conditions, confirming the RK4 implementation behaves correctly.
+**Energy conservation.** In an isolated gravitational system, total mechanical energy (kinetic plus potential) should remain constant. Over the same test run, total energy held at approximately -3.97, drifting by 0.0002 to 0.008 percent. A first-order Euler integrator typically drifts 5 to 50 percent under equivalent conditions, confirming the RK4 implementation behaves correctly.
 
 At close planetary encounters, gravitational softening (`F = G·m1·m2 / (r² + ε²)`) is applied to prevent force singularities as distance approaches zero, avoiding artificial energy spikes during near collisions.
 
